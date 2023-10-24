@@ -1,5 +1,27 @@
-import json, hashlib
+import json, hashlib, os
 
+# constants
+MAIN_CONFIG_PATH = "./build-config.json"
+CONFIG_HASH_LOCATION = "./server"
+
+# generate meta
+buildId = "cat"
+buildDate = "the"
+builtBy = "hi"
+
+dataTemplate = {
+    "buildId": buildId,
+    "buildDate": buildDate,
+    "builtBy": builtBy,
+    "data": {}
+}
+
+# read in the main config
+mainConfig = open(MAIN_CONFIG_PATH, "r")
+mainData: dict = json.load(mainConfig)
+mainConfig.close()
+
+# Hashes file without taking too much memory
 def hashFile(file: str):
     BUFFER_SIZE = 65536
     sha = hashlib.sha512()
@@ -9,53 +31,35 @@ def hashFile(file: str):
             if not data:
                 break
             sha.update(data)
+        f.close()
     return sha.hexdigest()
 
-# generate meta
-buildId = "cat"
-buildDate = "the"
-builtBy = "hi"
+# creates a config file
+def createConfigFile(path: str, data: dict = {}, ignorePaths: list = [], createHash = True):
+    configuration = dataTemplate.copy()
+    configData: dict = {}
 
-# read in the main config
-mainConfig = open("./build-config.json")
-data: dict = json.load(mainConfig)
-mainConfig.close()
+    for key in mainData.keys():
+        if not ignorePaths.count(key):
+            configData[key] = mainData[key]
+    
+    for key in data.keys():
+        if not ignorePaths.count(key):
+            configData[key] = data[key]
 
-dataTemplate = {
-    "buildId": buildId,
-    "buildDate": buildDate,
-    "builtBy": builtBy,
-    "data": {}
-}
+    configuration["data"] = configData
 
-# configure the server
-serverData = dataTemplate.copy()
+    configJson = json.dumps(configuration)
 
-for key in data.keys():
-    serverData[key] = data[key]
+    configFile = open(path, mode="w")
+    configFile.write(configJson)
+    configFile.close()
 
-serverJson = json.dumps(serverData)
+    if createHash:
+        hashPath = os.path.join(CONFIG_HASH_LOCATION, os.path.basename(path) + ".hash").replace("\\", "/")
+        sha = hashFile(path)
+        hFile = open(hashPath, "w")
+        hFile.write(sha)
+        hFile.close()
 
-serverConfig = open("./server/config.json", mode="w")
-serverConfig.write(serverJson)
-serverConfig.close()
-
-serverHash = hashFile("./server/config.json")
-
-serverHashFile = open("./server/config.json.hash", mode="w")
-serverHashFile.write(serverHash)
-serverHashFile.close()
-
-print(serverHash)
-
-
-print(serverData, dataTemplate)
-
-
-clientConfig = open("./client/config.json", mode="w")
-
-print(data)
-
-
-
-clientConfig.close()
+createConfigFile("./server/config.json")

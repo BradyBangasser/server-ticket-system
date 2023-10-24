@@ -1,1 +1,1 @@
-{"buildId": "cat", "buildDate": "the", "builtBy": "hi", "data": {}, "serverPort": 8080, "clientPort": 3000, "server": {}, "client": {}}
+{"buildId": "cat", "buildDate": "the", "builtBy": "hi", "data": {"hello": "there"}}

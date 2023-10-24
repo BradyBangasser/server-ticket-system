@@ -27,6 +27,8 @@ build() {
         esac
     done
 
+    python3 configer.py
+
     cd ./client
 
     if [ "$debug" == "true" ]; then 

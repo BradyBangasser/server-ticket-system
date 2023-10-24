@@ -37,3 +37,7 @@ next-env.d.ts
 
 
 .yarn
+
+/server/config.json
+/server/config.json.*
+/client/config.json

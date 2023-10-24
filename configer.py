@@ -1,5 +1,16 @@
 import json, hashlib
 
+def hashFile(file: str):
+    BUFFER_SIZE = 65536
+    sha = hashlib.sha512()
+    with open(file, "rb") as f:
+        while True:
+            data = f.read(BUFFER_SIZE)
+            if not data:
+                break
+            sha.update(data)
+    return sha.hexdigest()
+
 # generate meta
 buildId = "cat"
 buildDate = "the"
@@ -29,7 +40,11 @@ serverConfig = open("./server/config.json", mode="w")
 serverConfig.write(serverJson)
 serverConfig.close()
 
-serverHash = hashlib.sha512(open("./server/config.json").buffer)
+serverHash = hashFile("./server/config.json")
+
+serverHashFile = open("./server/config.json.hash", mode="w")
+serverHashFile.write(serverHash)
+serverHashFile.close()
 
 print(serverHash)
 

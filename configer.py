@@ -2,7 +2,7 @@ import json, hashlib, os, subprocess, datetime
 
 # constants
 MAIN_CONFIG_PATH = "./build-config.json"
-CONFIG_HASH_LOCATION = "./server"
+CONFIG_HASH_LOCATION = "./server/public"
 
 # generate meta
 buildDate = datetime.datetime.now().isoformat()

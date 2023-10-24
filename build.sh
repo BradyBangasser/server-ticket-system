@@ -19,6 +19,15 @@ ex() {
     fi
 }
 
+init() {
+    cd server
+    go get
+    cd ../client
+    yarn
+    yarn install
+    cd ..
+}
+
 build() {
     while getopts 'rRh' flag; do
         case "${flag}" in 
@@ -26,6 +35,10 @@ build() {
             R) debug='false';;
         esac
     done
+
+    if [ ! -f "/server/go.sum" ]; then
+        init
+    fi 
 
     python3 configer.py
 
@@ -48,20 +61,11 @@ build() {
     fi
 }
 
-init() {
-    cd server
-    go get
-    cd ../client
-    yarn
-    yarn install
-    cd ..
-}
-
 clean() {
     cd server
-    rm -f go.sum
+    rm -f go.sum *.hash config.json
     cd ../client
-    rm -rf node_modules next-env.d.ts .next *.log.* .vercel build .yarn
+    rm -rf node_modules next-env.d.ts .next *.log.* .vercel build .yarn config.json
 }
 
 case "$1" in 

@@ -19,6 +19,7 @@ ex() {
     fi
 }
 
+# generate all of the dependences 
 init() {
     cd server
     go get
@@ -28,6 +29,7 @@ init() {
     cd ..
 }
 
+# build the code (and run it)
 build() {
     while getopts 'rRh' flag; do
         case "${flag}" in 
@@ -61,6 +63,7 @@ build() {
     fi
 }
 
+# clean up all of the generated files
 clean() {
     cd server
     rm -f go.sum *.hash config.json

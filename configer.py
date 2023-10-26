@@ -7,8 +7,12 @@ CONFIG_HASH_LOCATION = "./server/public"
 # generate meta
 buildDate = datetime.datetime.now().isoformat()
 builtBy = {
-    "name": subprocess.run(["git", "config", "user.name"], stdout=subprocess.PIPE).stdout.strip().decode(),
-    "email": subprocess.run(["git", "config", "user.email"], stdout=subprocess.PIPE).stdout.strip().decode()
+    "name": subprocess.run(["git", "config", "user.name"], stdout=subprocess.PIPE)
+    .stdout.strip()
+    .decode(),
+    "email": subprocess.run(["git", "config", "user.email"], stdout=subprocess.PIPE)
+    .stdout.strip()
+    .decode(),
 }
 buildId = hashlib.sha1((builtBy["email"] + buildDate).encode()).hexdigest()
 
@@ -16,13 +20,14 @@ dataTemplate = {
     "buildId": buildId,
     "buildDate": buildDate,
     "builtBy": builtBy,
-    "data": {}
+    "data": {},
 }
 
 # read in the main config
 mainConfig = open(MAIN_CONFIG_PATH, "r")
 mainData: dict = json.load(mainConfig)
 mainConfig.close()
+
 
 # Hashes file without taking too much memory
 def hashFile(file: str):
@@ -37,12 +42,20 @@ def hashFile(file: str):
         f.close()
     return sha.hexdigest()
 
+
 # creates a config file
-def createConfigFile(path: str, data: dict = {}, ignorePaths: list = [], createHash = True, hashFileExtention = ".hash", removeMeta: list = []):
+def createConfigFile(
+    path: str,
+    data: dict = {},
+    ignorePaths: list = [],
+    createHash=True,
+    hashFileExtention=".hash",
+    removeMeta: list = [],
+):
     print(f"Gathering config data for '{path}'")
     configuration = dataTemplate.copy()
     configData: dict = {}
-    
+
     for key in removeMeta:
         try:
             configuration.pop(key)
@@ -52,7 +65,7 @@ def createConfigFile(path: str, data: dict = {}, ignorePaths: list = [], createH
     for key in mainData.keys():
         if not ignorePaths.count(key):
             configData[key] = mainData[key]
-    
+
     for key in data.keys():
         if not ignorePaths.count(key):
             configData[key] = data[key]
@@ -67,12 +80,20 @@ def createConfigFile(path: str, data: dict = {}, ignorePaths: list = [], createH
     configFile.close()
 
     if createHash:
-        hashPath = os.path.join(CONFIG_HASH_LOCATION, os.path.basename(path) + hashFileExtention).replace("\\", "/")
+        hashPath = os.path.join(
+            CONFIG_HASH_LOCATION, os.path.basename(path) + hashFileExtention
+        ).replace("\\", "/")
         print(f"Creating hash of '{path}' at '{hashPath}'")
         sha = hashFile(path)
         hFile = open(hashPath, "w")
         hFile.write(sha)
         hFile.close()
 
+
 createConfigFile("./server/config.json")
-createConfigFile("./client/config.json", ignorePaths=["server", "builtBy"], hashFileExtention=".client.hash", removeMeta=["builtBy"])
+createConfigFile(
+    "./client/config.json",
+    ignorePaths=["server", "builtBy"],
+    hashFileExtention=".client.hash",
+    removeMeta=["builtBy"],
+)

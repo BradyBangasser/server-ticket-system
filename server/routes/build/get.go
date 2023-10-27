@@ -9,7 +9,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func GetBuild(c *gin.Context) {
+func GET(c *gin.Context) {
 	config, err := util.GetConfig()
 
 	if err != nil {

@@ -71,7 +71,7 @@ def createRouter(routeList: list, initalPath = "/", parentVariable = "r", n = Fa
                 routev = sp
 
                 if re.match(r"__.*__", subroute):
-                    routev = f"/[{str(path.basename(subroute)).replace('__', '')}]"  
+                    routev = f"/:{str(path.basename(subroute)).replace('__', '')}"  
 
                 routerLines.append(f'{spv} := {parentVariable}.Group("{routev}"); ' + "{")
                 routerLines += createRouter(route[subroute], sp, spv, True)

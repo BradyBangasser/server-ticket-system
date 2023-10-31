@@ -3,23 +3,33 @@
 body {
     background-color: $bg-color;
     display: flex;
-    width: 100%;
     flex-direction: column;
+    // align-items: stretch;
+    width: 100%;
     margin: 0px;
     min-height: 100vh;
 
     #mainNav {
-        width: 100%;
+        width: 100vw;
         background-color: $theme-color;
+        z-index: 99999;
     }
 
     #content {
-        padding-bottom: auto;
+        width: 100vw;
+        flex: 1;
+        height: auto;
+        min-height: 70vh;
     }
 
     #mainFooter {
-        margin-top: auto;
-        width: 100%;
+        width: 100vw;
         background-color: $theme-color;
+        margin: 0px;
+        z-index: 99999; 
+        
+        & * {
+            margin: 0px;
+        }
     }
 }

@@ -1,11 +1,17 @@
 .layout {
     height: auto;
     padding-bottom: auto;
+    display: flex;
+    height: 100%;
 
     & .subnavbar {
+        position: sticky;
+        left: 0;
+        top: 0;
         height: 100%;
+        z-index: 0;
         background-color: green;
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
     }
 }

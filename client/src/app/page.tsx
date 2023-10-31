@@ -1,6 +1,4 @@
-async function fetchData() {
-  const data = await fetch()
-}
+// Make some fany designs here sometime
 
 export default async function Home() {
   return (

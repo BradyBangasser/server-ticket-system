@@ -43,6 +43,7 @@ build() {
     fi 
 
     python3 configer.py
+    python3 go-builder.py
 
     cd ./client
 

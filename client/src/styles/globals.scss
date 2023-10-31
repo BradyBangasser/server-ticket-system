@@ -1,3 +1,25 @@
-* {
-    color: red;
+@import "../styles/variables.scss";
+
+body {
+    background-color: $bg-color;
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    margin: 0px;
+    min-height: 100vh;
+
+    #mainNav {
+        width: 100%;
+        background-color: $theme-color;
+    }
+
+    #content {
+        padding-bottom: auto;
+    }
+
+    #mainFooter {
+        margin-top: auto;
+        width: 100%;
+        background-color: $theme-color;
+    }
 }

@@ -18,6 +18,9 @@ const subNavRoutes: SubRoute[] = [{
             route: "/hello"
         }
     ]
+}, {
+    name: "Work Orders",
+    route: "/work-orders"
 }]
 
 function createNavRoutes(initalPath: string, routes: SubRoute[]): React.ReactNode {
@@ -28,7 +31,7 @@ function createNavRoutes(initalPath: string, routes: SubRoute[]): React.ReactNod
                     <div className={styles.nestedRouteTitle}>
                         {route.name}
                     </div>
-                    <div>
+                    <div className={styles.dropdown}>
                         {createNavRoutes(join(initalPath, route.name), route.route)}
                     </div>
                 </div>

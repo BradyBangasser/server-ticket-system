@@ -1,6 +1,20 @@
 @import "../../styles/variables.scss";
 @import "../../styles/functions.scss";
 
+$navbutton-max-height: 35px;
+
+@keyframes growDown {
+    0% {
+        transform: scaleY(0)
+    }
+    80% {
+        transform: scaleY(1.1)
+    }
+    100% {
+        transform: scaleY(1)
+    }
+}
+
 .layout {
     display: flex;
     height: $content-min-height;
@@ -12,13 +26,35 @@
         background-color: tint($theme-color, 5%);
         width: 33vw;
         padding: 5px;
+        transition: 300ms;
 
         & .nestedNavlink {
             text-align: center;
             text-transform: capitalize;
+            max-height: $navbutton-max-height;
+            height: $navbutton-max-height;
             & .nestedRouteTitle {
-                &::before {
-                    content: ">";
+                & .dropdown {
+                    display: none;
+                }
+
+                &:hover {
+                    & .dropdown {
+                        animation: growDown 300ms ease-in-out forwards;
+                        display: block;
+                    }
+                }
+            }
+
+            & .dropdown {
+                display: none;
+            }
+
+            &:hover {
+                height: auto;
+                max-height: max-content;
+                & .dropdown {
+                    display: flex;
                 }
             }
         }
@@ -26,6 +62,8 @@
         & .navlink {
             color: $color;
             transition: 300ms;
+            max-height: $navbutton-max-height;
+            height: $navbutton-max-height;
             width: 100%;
             text-align: center;
             text-transform: capitalize;

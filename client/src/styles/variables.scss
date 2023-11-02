@@ -1,2 +1,8 @@
-$bg-color: black;
-$theme-color: blue
+$bg-color: rgb(36, 34, 34);
+$theme-color: rgb(24, 24, 62);
+$color: white;
+$font: "Nunito Sans";
+
+$navbar-height: 5vh;
+$footer-height: 3vh;
+$content-min-height: 100vh - $navbar-height - $footer-height

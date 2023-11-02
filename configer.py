@@ -75,7 +75,7 @@ def createConfigFile(
     configJson = json.dumps(configuration)
 
     print(f"Writing config to '{path}'")
-    configFile = open(path, mode="w")
+    configFile = open(path, mode="w+")
     configFile.write(configJson)
     configFile.close()
 
@@ -85,7 +85,7 @@ def createConfigFile(
         ).replace("\\", "/")
         print(f"Creating hash of '{path}' at '{hashPath}'")
         sha = hashFile(path)
-        hFile = open(hashPath, "w")
+        hFile = open(hashPath, "w+")
         hFile.write(sha)
         hFile.close()
 

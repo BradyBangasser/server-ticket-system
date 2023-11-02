@@ -3,6 +3,14 @@
 run='true'
 debug='true'
 
+while getopts "rRh" flag; do
+    echo "$flag this"
+    case "${flag}" in
+        r) run='false' debug='false';;
+        R) debug='false';;
+    esac
+done
+
 printHelp() {
     echo "[subcommand]: build, init, clean"
     echo "-r: Builds Release Code"
@@ -31,12 +39,7 @@ init() {
 
 # build the code (and run it)
 build() {
-    while getopts 'rRh' flag; do
-        case "${flag}" in 
-            r) run='false' debug='false';;
-            R) debug='false';;
-        esac
-    done
+
 
     if [ ! -f "/server/go.sum" ]; then
         init
@@ -68,8 +71,10 @@ build() {
 clean() {
     cd server
     rm -f go.sum *.hash config.json
+    echo "Removed server files"
     cd ../client
     rm -rf node_modules next-env.d.ts .next *.log.* .vercel build .yarn config.json
+    echo "Removed client files"
 }
 
 case "$1" in 

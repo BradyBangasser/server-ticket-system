@@ -14,8 +14,12 @@
         padding: 5px;
 
         & .nestedNavlink {
-            &::before {
-                content: ">";
+            text-align: center;
+            text-transform: capitalize;
+            & .nestedRouteTitle {
+                &::before {
+                    content: ">";
+                }
             }
         }
 
@@ -41,8 +45,8 @@
                     left: 0;
                     width: 100%;
                     height: .09em;
-                    background-color: $color;
                     opacity: 1;
+                    background-image: linear-gradient(to right, rgba(0,0,0,0), $color, rgba(0,0,0,0));
                     transition: opacity 300ms, transform 300ms;
                     transform: scale(0);
                     transform-origin: center;

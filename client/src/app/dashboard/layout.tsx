@@ -25,7 +25,12 @@ function createNavRoutes(initalPath: string, routes: SubRoute[]): React.ReactNod
         if (Array.isArray(route.route)) {
             return (
                 <div key={index} className={styles.nestedNavlink}>
-                    {createNavRoutes(join(initalPath, route.name), route.route)}
+                    <div className={styles.nestedRouteTitle}>
+                        {route.name}
+                    </div>
+                    <div>
+                        {createNavRoutes(join(initalPath, route.name), route.route)}
+                    </div>
                 </div>
             )
         } else {

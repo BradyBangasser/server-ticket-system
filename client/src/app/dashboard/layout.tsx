@@ -1,10 +1,7 @@
 import styles from "./styles.module.scss"
 import { join } from "path"
-
-interface SubRoute {
-    name: string
-    route: string | SubRoute[]
-}
+import { SubRoute } from "./types"
+import LayoutRoute from "./layout-route"
 
 const subNavRoutes: SubRoute[] = [{
     name: "Dashboard",
@@ -16,6 +13,9 @@ const subNavRoutes: SubRoute[] = [{
         {
             name: "list",
             route: "/hello"
+        }, {
+            name: "test",
+            route: "/hello"
         }
     ]
 }, {
@@ -23,34 +23,11 @@ const subNavRoutes: SubRoute[] = [{
     route: "/work-orders"
 }]
 
-function createNavRoutes(initalPath: string, routes: SubRoute[]): React.ReactNode {
-    return routes.map((route, index) => {
-        if (Array.isArray(route.route)) {
-            return (
-                <div key={index} className={styles.nestedNavlink}>
-                    <div className={styles.nestedRouteTitle}>
-                        {route.name}
-                    </div>
-                    <div className={styles.dropdown}>
-                        {createNavRoutes(join(initalPath, route.name), route.route)}
-                    </div>
-                </div>
-            )
-        } else {
-            return (
-                <div key={index + initalPath} className={styles.navlink}>
-                    <a href={`${initalPath}${route.route}`}>{route.name}</a>
-                </div>
-            )
-        }
-    })
-}
-
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
     return (
         <div className={styles.layout}>
             <div className={styles.subnavbar}>
-                {createNavRoutes("./dashboard", subNavRoutes)}   
+                {subNavRoutes.map((val, index) => <div key={index}>{<LayoutRoute name={val.name} route={val.route} />}</div>)}   
             </div>
             <main>
                 {children}

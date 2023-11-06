@@ -4,7 +4,6 @@ run='true'
 debug='true'
 
 while getopts "rRh" flag; do
-    echo "$flag this"
     case "${flag}" in
         r) run='false' debug='false';;
         R) debug='false';;

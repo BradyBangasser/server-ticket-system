@@ -5,6 +5,7 @@ $navbutton-max-height: 35px;
 
 @keyframes growDown {
     0% {
+        visibility: visible;
         transform: scaleY(0)
     }
     80% {
@@ -12,6 +13,46 @@ $navbutton-max-height: 35px;
     }
     100% {
         transform: scaleY(1)
+    }
+}
+
+@keyframes growUp {
+    0% {
+        transform: scaleY(1)
+    }
+    20% {
+        transform: scaleY(1.1)
+    }
+    100% {
+        visibility: hidden;
+        transform: scaleY(0)
+    } 
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+  }
+  to { 
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeout {
+    from {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+    }
+
+    to {
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-10px);
     }
 }
 
@@ -23,8 +64,8 @@ $navbutton-max-height: 35px;
     & .subnavbar {
         height: $content-min-height;
         z-index: 0;
-        background-color: tint($theme-color, 5%);
-        width: 33vw;
+        background-color: tint($theme-color, 3.8%);
+        width: 300px;
         padding: 5px;
         transition: 300ms;
 
@@ -33,28 +74,38 @@ $navbutton-max-height: 35px;
             text-transform: capitalize;
             max-height: $navbutton-max-height;
             height: $navbutton-max-height;
+            text-align: center;
+            font-size: large;
             & .nestedRouteTitle {
-                & .dropdown {
-                    display: none;
-                }
+                column-gap: 20px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
 
-                &:hover {
-                    & .dropdown {
-                        animation: growDown 300ms ease-in-out forwards;
-                        display: block;
-                    }
+                & .dropsign {
+                    transition: 300ms;
+                    font-size: x-large;
                 }
             }
 
             & .dropdown {
-                display: none;
+                // visibility: hidden;
+                animation: fadeout 100ms linear forwards;
             }
 
             &:hover {
                 height: auto;
                 max-height: max-content;
+
+                & .nestedRouteTitle {
+                    & .dropsign {
+                        transform: rotate(90deg);
+                    }
+                }
+                
                 & .dropdown {
-                    display: flex;
+                    visibility: visible;
+                    animation: fade 300ms linear forwards;
                 }
             }
         }

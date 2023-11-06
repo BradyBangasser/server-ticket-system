@@ -91,7 +91,9 @@ def createRouter(routeList: list, initalPath = "/", parentVariable = "r", n = Fa
         
 
 goFiles: list = getFiles()
-goFiles.remove(BUILD_FILE_NAME)
+
+if BUILD_FILE_NAME in goFiles:
+    goFiles.remove(BUILD_FILE_NAME)
 
 buildImports = getImports(goFiles)
 buildRouter = createRouter(goFiles)

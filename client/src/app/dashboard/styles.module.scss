@@ -93,7 +93,7 @@ $navbutton-max-height: 35px;
                 animation: fadeout 100ms linear forwards;
             }
 
-            &:hover {
+            &.selectedDropdown {
                 height: auto;
                 max-height: max-content;
 
@@ -135,7 +135,7 @@ $navbutton-max-height: 35px;
                     width: 100%;
                     height: .09em;
                     opacity: 1;
-                    background-image: linear-gradient(to right, rgba(0,0,0,0), $color, rgba(0,0,0,0));
+                    background-image: linear-gradient(to right, $color, rgba(0,0,0,0));
                     transition: opacity 300ms, transform 300ms;
                     transform: scale(0);
                     transform-origin: center;

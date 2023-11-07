@@ -5,29 +5,27 @@ import LayoutRoute from "./layout-route"
 
 const subNavRoutes: SubRoute[] = [{
     name: "Dashboard",
-    route: "/"
+    route: "/dashboard"
 },
 {
     name: "invoices",
-    route: [
-        {
-            name: "list",
-            route: "/hello"
-        }, {
-            name: "test",
-            route: "/hello"
-        }
-    ]
+    route: "/dashboard/invoices/view"
 }, {
     name: "Work Orders",
-    route: "/work-orders"
-}]
+    route: [{
+        name: "Create",
+        route: "/dashboard/work-orders/new",
+    }, {
+        name: "View",
+        route: "/dashboard/work-orders/"
+    }]
+}].sort((a, b) => a.name.localeCompare(b.name))
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
     return (
         <div className={styles.layout}>
             <div className={styles.subnavbar}>
-                {subNavRoutes.map((val, index) => <div key={index}>{<LayoutRoute name={val.name} route={val.route} />}</div>)}   
+                {subNavRoutes.map((val, index) => <LayoutRoute key={index} name={val.name} route={val.route} />)}   
             </div>
             <main>
                 {children}

@@ -4,7 +4,7 @@ import { SubRoute } from "./types";
 import styles from "./styles.module.scss"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react"
+import React, { useState } from "react"
 
 export default function LayoutRoute({ name, route }: {
     name: string
@@ -18,18 +18,28 @@ export default function LayoutRoute({ name, route }: {
                     <div className={styles.dropsign}>
                         <FontAwesomeIcon icon={faChevronRight} rotate={90} />
                     </div>
-                    <div className={styles.droptitle}>{name}</div>
+                    <div className={`${styles.droptitle} ${styles.routeLink}`}>{name}</div>
                 </div>
                 <div className={styles.dropdown}>
-                    {route.map((subroute, index) => <a key={index}>{subroute.name}</a>)}
+                    {route.map((subroute, index) => <RouteLink key={index} href={subroute.route.toString()}>{subroute.name}</RouteLink>)}
                 </div>
             </div>
         )
     } else {
         return (
             <div className={styles.navlink}>
-                <div className={styles.droptitle}><a href={route as string}>{name}</a></div>
+                <RouteLink href={route}>{name}</RouteLink>
             </div>
         )
     }
+}
+
+function RouteLink({
+    href,
+    children
+}: {
+    href: string
+    children: any
+}) {
+    return <div className={styles.routeLink}><a href={href}>{children}</a></div>
 }

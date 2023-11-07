@@ -60,22 +60,36 @@ $navbutton-max-height: 35px;
     display: flex;
     height: $content-min-height;
     overflow: hidden;
+    justify-content: right;
+
+    & .routeLink {
+        width: max-content;
+        min-width: 100px;
+        margin: 0px;
+        margin-left: auto;
+        text-align: right;
+        text-transform: capitalize;
+        margin-right: 2px;
+        font-size: larger;
+        & a {
+            color: $color;
+            text-decoration: none;
+            width: fit-content;
+            margin-left: auto;
+        }
+    }
 
     & .subnavbar {
         height: $content-min-height;
         z-index: 0;
         background-color: tint($theme-color, 3.8%);
-        width: 300px;
+        width: 200px;
         padding: 5px;
         transition: 300ms;
 
         & .nestedNavlink {
-            text-align: center;
-            text-transform: capitalize;
             max-height: $navbutton-max-height;
             height: $navbutton-max-height;
-            text-align: center;
-            font-size: large;
             & .nestedRouteTitle {
                 column-gap: 20px;
                 display: flex;
@@ -90,7 +104,17 @@ $navbutton-max-height: 35px;
 
             & .dropdown {
                 // visibility: hidden;
+                display: flex;
+                flex-direction: column;
                 animation: fadeout 100ms linear forwards;
+            }
+
+            &:hover {
+                & .nestedRouteTitle {
+                    & .dropsign {
+                        transform: translateX(30px);
+                    }
+                }
             }
 
             &.selectedDropdown {
@@ -99,7 +123,7 @@ $navbutton-max-height: 35px;
 
                 & .nestedRouteTitle {
                     & .dropsign {
-                        transform: rotate(90deg);
+                        transform: translateX(30px) rotate(90deg);
                     }
                 }
                 
@@ -111,24 +135,25 @@ $navbutton-max-height: 35px;
         }
 
         & .navlink {
-            color: $color;
             transition: 300ms;
             max-height: $navbutton-max-height;
             height: $navbutton-max-height;
-            width: 100%;
+            width: fit-content;
             text-align: center;
             text-transform: capitalize;
             padding: 0px;
+
             margin-top: 2px;
+            margin-left: auto;
 
             & a {
-                color: $color;
                 text-decoration: none;
                 padding: .2em 0em;
                 display: flex;
                 flex-direction: column;
 
                 &::after {
+                    visibility: hidden;
                     content: "";
                     bottom: 0;
                     left: 0;
@@ -137,16 +162,17 @@ $navbutton-max-height: 35px;
                     opacity: 1;
                     background-image: linear-gradient(to right, $color, rgba(0,0,0,0));
                     transition: opacity 300ms, transform 300ms;
-                    transform: scale(0);
+                    transform: translateX(-30px);
                     transform-origin: center;
                 }
             }
 
             &:hover {
-                background-image: linear-gradient(to right, tint($theme-color, 5%), $theme-color, tint($theme-color, 5%));
+                // background-image: linear-gradient(to right, tint($theme-color, 5%), $theme-color, tint($theme-color, 5%));
                 
                 & a::after {
-                    transform: scale(1);
+                    visibility: visible;
+                    transform: translateX(0px);
                 }
             }
         }

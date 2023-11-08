@@ -1,3 +1,3 @@
-export function GET(...args: any) {
-    console.log(args)
+export function GET(req: Request) {
+   return Response.json({})
 }

@@ -29,7 +29,7 @@ def getImports(groups, cpath = ROUTES_PATH, r = False):
     for group in groups:
         if type(group) == str and not pathAdded:
             importPath = path.join(cpath).replace("\\", "/")
-            imports.append(f'{importPath.replace("/", "_")} "{importPath}"')
+            imports.append(f'{re.sub(r"[-/]", "_", importPath)} "{importPath}"')
             pathAdded = True
         elif type(group) == dict:
             for key in group.keys():
@@ -65,6 +65,7 @@ def createRouter(routeList: list, initalPath = "/", parentVariable = "r", n = Fa
         if type(route) == dict:
            for subroute in route.keys():
                 spv = f"{parentVariable}_{subroute}" # sub path parent variable
+                spv = re.sub(r'[-/]', "_", spv)
 
                 sp = "/" + path.basename(subroute) # sub path path
 
@@ -77,7 +78,10 @@ def createRouter(routeList: list, initalPath = "/", parentVariable = "r", n = Fa
                 routerLines += createRouter(route[subroute], sp, spv, True)
                 routerLines.append("}")
         elif type(route) == str:
-            importVar = f"{ROUTES_PATH}{initalPath}".replace("/", "_")
+            if not n and route == "middleware":
+                print(route)
+            importVar = f"{ROUTES_PATH}{re.sub(r'-', '_', initalPath)}"
+            importVar = re.sub(r"[/-]", "_", importVar)
             routeMethod = route.replace('.go', '').upper()
 
             routerLines.append(f'{parentVariable}.{routeMethod}("/", {importVar}.{routeMethod})')

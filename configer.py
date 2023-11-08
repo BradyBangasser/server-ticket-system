@@ -2,7 +2,10 @@ import json, hashlib, os, subprocess, datetime
 
 # constants
 MAIN_CONFIG_PATH = "./build-config.json"
-CONFIG_HASH_LOCATION = "./server/public"
+CONFIG_HASH_PATH = "./server/public"
+SERVICE_FILE_PATH = "./service-file.json"
+SERVER_SERVICE_FILE_PATH = "./server/service-file.json"
+CLIENT_SERVICE_FILE_PATH = "./client/service-file.json"
 
 # generate meta
 buildDate = datetime.datetime.now().isoformat()
@@ -81,7 +84,7 @@ def createConfigFile(
 
     if createHash:
         hashPath = os.path.join(
-            CONFIG_HASH_LOCATION, os.path.basename(path) + hashFileExtention
+            CONFIG_HASH_PATH, os.path.basename(path) + hashFileExtention
         ).replace("\\", "/")
         print(f"Creating hash of '{path}' at '{hashPath}'")
         sha = hashFile(path)
@@ -97,3 +100,22 @@ createConfigFile(
     hashFileExtention=".client.hash",
     removeMeta=["builtBy"],
 )
+
+# ___SERVICE FILE CLONING___
+
+print("Attempting to clone service file...")
+try:
+    serviceFile = open(SERVICE_FILE_PATH, "r")  # r
+    serviceFileContent = serviceFile.read()
+    serviceFile.close()
+
+    serverServiceFile = open(SERVER_SERVICE_FILE_PATH, "w")
+    serverServiceFile.write(serviceFileContent)
+    serverServiceFile.close()
+
+    clientServiceFile = open(CLIENT_SERVICE_FILE_PATH, "w")
+    clientServiceFile.write(serviceFileContent)
+    clientServiceFile.close()
+    print("Cloned service file")
+except:
+    print("Failed to clone service file, expect database and auth errors")

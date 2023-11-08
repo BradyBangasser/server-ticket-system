@@ -1,8 +1,10 @@
+import { FirestoreAdapter } from "@auth/firebase-adapter"
 import NextAuth from "next-auth"
 
 const handler = NextAuth({
     providers: [],
-    secret: process.env.SECRET
+    secret: process.env.SECRET,
+    adapter: FirestoreAdapter()
 })
 
 export {

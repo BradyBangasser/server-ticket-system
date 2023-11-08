@@ -44,3 +44,6 @@ next-env.d.ts
 /server/public/*.hash
 /server/routes/build.go
 /server/server
+service-file.json
+client/service-file.json
+server/service-file.json

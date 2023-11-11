@@ -1,4 +1,9 @@
-
-export default function Dashboard() {
-    return <div>Admin Dashboard</div>
+export default function OrgSignUp() {
+    return (
+        <div>
+               <form>
+                    
+               </form>
+        </div>
+    )
 }

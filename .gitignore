@@ -47,3 +47,5 @@ next-env.d.ts
 service-file.json
 client/service-file.json
 server/service-file.json
+
+secure-config

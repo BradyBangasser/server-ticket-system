@@ -28,6 +28,7 @@ ex() {
 
 # generate all of the dependences 
 init() {
+    mkdir /secure-conf
     cd server
     go get
     cd ../client

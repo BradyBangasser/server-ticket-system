@@ -1,4 +1,9 @@
 {
-    "hello": "there",
-    "serverPort": 8080
+    "serverPort": 8080,
+    "roles": {
+        "sysAdmin": 9,
+        "orgAdmin": 8,
+        "contractor": 7,
+        "user": 0
+    }
 }

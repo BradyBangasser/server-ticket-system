@@ -49,3 +49,5 @@ client/service-file.json
 server/service-file.json
 
 secure-config
+config-gen/target
+config-gen/Cargo.lock
